@@ -365,7 +365,6 @@ function getTagName(codeRow) {
     1,
     spaceIndex > endIndex || spaceIndex == -1 ? endIndex : spaceIndex
   ) || "";
-  console.log("tagName:", tagName);
   return tagName;
 }
 function transform(code, filePath) {
@@ -411,10 +410,8 @@ function vitePluginTemplate() {
     enforce: "pre",
     apply: "serve",
     config(config, { command }) {
-      console.log("\u8FD9\u91CC\u662Fconfig\u94A9\u5B50");
     },
     configResolved(resolvedConfig) {
-      console.log("\u8FD9\u91CC\u662FconfigResolved\u94A9\u5B50");
     },
     configureServer(server) {
       server.middlewares.use("/test", middleware_default);
