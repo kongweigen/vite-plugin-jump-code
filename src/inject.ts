@@ -5,7 +5,7 @@ let injectFn = `
       e.preventDefault();
       e.stopPropagation();
       let loc = getFilePath(e.target)
-      loc && fetch('/test?path=' + loc)
+      loc && fetch('/jumpcode?path=' + loc)
     }
   })
 
