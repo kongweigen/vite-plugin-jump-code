@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-jump-code",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -10,10 +10,16 @@
       "require": "./dist/index.js"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm"
   },
-  "keywords": [],
+  "keywords": [
+    "vite",
+    "vite-plugin"
+  ],
   "author": "peigen",
   "license": "ISC",
   "dependencies": {
