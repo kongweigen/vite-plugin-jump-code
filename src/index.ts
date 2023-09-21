@@ -5,8 +5,7 @@ import inject from './inject'
 
 export default function vitePluginTemplate(): Plugin {
   return {
-    name: 'my-vite-plugin',
-    enforce: 'pre', // pre | post, pre 比 post 先执行
+    name: 'jump-code',
     apply: 'serve', // 指明它们仅在 'build' 或 'serve' 模式时调用
     configureServer(server) {
       server.middlewares.use('/jumpcode', middleware)
@@ -19,7 +18,6 @@ export default function vitePluginTemplate(): Plugin {
      * HtmlTagDescriptor { tag: xxx, children: xxx, injectTo: xxx}
      */
     transformIndexHtml: {
-      enforce: 'pre',
       transform() {
         return [
           {

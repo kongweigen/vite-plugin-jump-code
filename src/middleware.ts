@@ -1,15 +1,14 @@
 import openEditor from './open-editor'
 import url from 'url'
+import { normalizePath } from 'vite'
+import { IncomingMessage, ServerResponse } from 'node:http'
 
-function middleware(req, res, next) {
-  let cwd = process.cwd()
-  // win 的路径需要转换
-  if (process.platform === 'win32') {
-    cwd = cwd.replace(/\\/g, '/')
-  }
+function middleware(req: IncomingMessage, res: ServerResponse) {
+  let cwd = normalizePath(process.cwd())
   const queryParams = url.parse(req.url!, true)
   let path = queryParams.query.path as string
   let pathList = path.split(':')
+  // 行号
   let rowIndex = pathList[pathList.length - 1]
   // path: E:/xxx/vite-vue3/src/components/HelloWorld.vue
   path = cwd + pathList[0]

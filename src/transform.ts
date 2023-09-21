@@ -1,14 +1,12 @@
 import path from 'path'
+import { normalizePath } from 'vite'
 
 function generate(code: string, filePath: string) {
   // 根据回车拆分代码文件
   let codeArr = code.split('\n')
-  let cwd = process.cwd()
-  // win 的路径需要转换
-  if (process.platform === 'win32') {
-    cwd = cwd.replace(/\\/g, '/')
-  }
+  let cwd = normalizePath(process.cwd())
   codeArr.forEach((codeRow, rowIndedx) => {
+    // 获取相对路径
     filePath = filePath.replace(cwd, '')
     let tagName = getTagName(codeRow)
     if (tagName) {
@@ -21,20 +19,15 @@ function generate(code: string, filePath: string) {
   code = codeArr.join('\n')
   return code
 }
-function getTagName(codeRow) {
+function getTagName(codeRow: string) {
   codeRow = codeRow.trim()
+  // 判断是否 < 开头
   if (!/^<[a-zA-z]/.test(codeRow)) return ''
-  let spaceIndex = codeRow.indexOf(' ')
-  let endIndex = codeRow.indexOf('>')
-  if (endIndex == -1) return ''
-  let tagName =
-    codeRow.substring(
-      1,
-      spaceIndex > endIndex || spaceIndex == -1 ? endIndex : spaceIndex
-    ) || ''
-  return tagName
+  // /\b/ 分词 '<div class="card">'.replace(/\b/g, "#") 
+  // '<#div# #class#="#card#">'
+  return codeRow.replace(/\b/g, '#').split('#')[1]
 }
-function transform(code, filePath) {
+function transform(code: string, filePath: string) {
   let ext = path.extname(filePath)
   switch (ext) {
     case '.vue':
